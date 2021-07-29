@@ -1,6 +1,5 @@
 <?php
 require_once './includes/connection.php';
-require_once './includes/CommonFunction.php';
 
 $connection = new createConnection();
 $connection->connectToDatabase();
@@ -19,7 +18,7 @@ $connection->connectToDatabase();
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="jquery/FileSaver.js"></script>
-    <script src="jquery/jquery-3.0.0.min.js"></script>
+        <script src="jquery/jquery-3.0.0.min.js"></script>
         <script src="select2/select2.min.js"></script>
         <style>
             .fakeimg {
@@ -38,22 +37,7 @@ $connection->connectToDatabase();
                     <div>
                         <div class="card">
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <a href="report_maker.php"><input type="button" class="btn btn-secondary" value="GENERATE REPORT" /></a>
-                                    </div>
-                                     <div class="col-md-4">
-                                         <a href="day_turnover_per_brand.php"><input type="button" class="btn btn-secondary" value="DAY TURNOVER PER BRAND" /></a>
-                                    </div>
-                                     <div class="col-md-4">
-                                         <a href="day_turnover_per_day.php"><input type="button" class="btn btn-secondary" value="DAY TURNOVER PER DAY" /></a>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div id="report_dev" style="text-align: center"></div>
-                                    </div>
-                                </div>
+                                <?php include_once './template/main_section.php'; ?>
                             </div>
                         </div><br/>
                     </div>
@@ -61,8 +45,8 @@ $connection->connectToDatabase();
             </div>
 
     </body>
-    
-    
+
+
 </html>
 <?php
 $connection->close();

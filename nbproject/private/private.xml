@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/DEVELOPMENTS/xampp72/htdocs/otrium_challenge/day_turnover_per_day_search.php</file>
-            <file>file:/F:/DEVELOPMENTS/xampp72/htdocs/otrium_challenge/day_turnover_per_day.php</file>
-            <file>file:/F:/DEVELOPMENTS/xampp72/htdocs/otrium_challenge/report_maker.php</file>
-            <file>file:/F:/DEVELOPMENTS/xampp72/htdocs/otrium_challenge/day_turnover_per_brand_search.php</file>
-            <file>file:/F:/DEVELOPMENTS/xampp72/htdocs/otrium_challenge/day_turnover_per_brand.php</file>
-            <file>file:/F:/DEVELOPMENTS/xampp72/htdocs/otrium_challenge/index.php</file>
+            <file>file:/F:/DEVELOPMENTS/xampp72/htdocs/otrium_challange_new/index.php</file>
+            <file>file:/F:/DEVELOPMENTS/xampp72/htdocs/otrium_challange_new/day_turnover_per_brand.php</file>
+            <file>file:/F:/DEVELOPMENTS/xampp72/htdocs/otrium_challange_new/controller/DayTurnOverPerBrand.php</file>
+            <file>file:/F:/DEVELOPMENTS/xampp72/htdocs/otrium_challange_new/report_search.php</file>
         </group>
     </open-files>
 </project-private>

@@ -1,21 +1,24 @@
 <?php
-require_once './includes/connection.php';
+include_once './includes/connection.php';
 require_once './includes/CommonFunction.php';
+include_once './controller/DayTurnOverPerDay.php';
 
 $connection = new createConnection();
 $connection->connectToDatabase();
+
+$dayTurnOverPerDay = new DayTurnOverPerDay();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang = "en">
     <head>
         <title>OTRIUM CHALLENGE</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <link href="select2/select2.min.css" rel="stylesheet" />
+        <meta charset = "utf-8">
+        <meta name = "viewport" content = "width=device-width, initial-scale=1">
+        <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href = "select2/select2.min.css" rel = "stylesheet" />
 
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="select2/select2.min.js"></script>
@@ -31,7 +34,7 @@ $connection->connectToDatabase();
         <div class="container" style="margin-top:30px">
             <div class="row">
                 <div class="col-sm-12" style="border:1px solid black">
-                    <h2>DAYS TURNOVER PER DAY</h2>
+                    <h2><?php echo $dayTurnOverPerDay->get_title() ?></h2>
 
                     <div>
                         <div class="card">
@@ -65,9 +68,9 @@ $connection->connectToDatabase();
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row" style="padding-bottom:10px">
                                     <div class="col-md-4">
-                                        <input type="button" class="btn btn-secondary" value="GENERATE REPORT" onclick="generate_report()" />
+                                        <input type="button" name="search" id="search" class="btn btn-secondary" onclick="generate_report()" value="GENERATE REPORT" />
                                         <a href="index.php"><input type="button" class="btn btn-secondary" value="BACK" /></a>
                                     </div>
                                 </div>
@@ -86,10 +89,10 @@ $connection->connectToDatabase();
     <script src="jquery/FileSaver.js"></script>
     <script src="jquery/jquery-3.0.0.min.js"></script>
     <script type="text/javascript">
-
                                             function generate_report() {
                                                 $('#report_dev').html('<p><img src="images/loading.gif"  /></p>');
-                                                $('#report_dev').load("day_turnover_per_day_search.php", {
+                                                $('#report_dev').load("report_search.php", {
+                                                    'report_type': 'day_turnover_per_day',
                                                     'brand': $('#brand').val(),
                                                     'from_date': $('#from_date').val(),
                                                     'to_date': $('#to_date').val()
@@ -97,19 +100,39 @@ $connection->connectToDatabase();
                                             }
 
                                             function generate_csv() {
-                                                //creating a temporary HTML link element (they support setting file names)
-                                                var a = document.createElement('a');
-                                                //getting data from our div that contains the HTML table
-                                                var data_type = 'data:application/vnd.ms-excel';
-                                                var table_div = document.getElementById('printexcel');
-                                                var table_html = table_div.outerHTML;
-                                                //just in case, prevent default behaviour
-                                                var blob = new Blob([table_html], {type: data_type});
-                                                saveAs(blob, "DAY TURNOVER PER DAY.xls");
+                                                $.ajax({
+                                                    url: 'report_search.php',
+                                                    type: 'POST',
+                                                    data: {
+                                                        'report_type': 'day_turnover_per_day_csv',
+                                                        'brand': $('#brand').val(),
+                                                        'from_date': $('#from_date').val(),
+                                                        'to_date': $('#to_date').val()
+                                                    },
+                                                    success: function (data) {
+                                                        console.log(data);
+                                                        var downloadLink = document.createElement("a");
+                                                        var fileData = [data];
+
+                                                        var blobObject = new Blob(fileData, {
+                                                            type: "text/csv;charset=utf-8;"
+                                                        });
+
+                                                        var url = URL.createObjectURL(blobObject);
+                                                        downloadLink.href = url;
+                                                        downloadLink.download = "<?php echo $dayTurnOverPerDay->title . '.csv'; ?>";
+
+                                                        /*
+                                                         * Actually download CSV
+                                                         */
+                                                        document.body.appendChild(downloadLink);
+                                                        downloadLink.click();
+                                                        document.body.removeChild(downloadLink);
+                                                    }
+                                                });
                                             }
     </script>
 </html>
 <?php
 $connection->close();
-?>
 
